@@ -8,21 +8,36 @@
   <style>
     div.container{
       width: 700px;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     div.card{
-      display: inline-block;
+      display: grid;
       width: 200px;
       border: 2px solid black;
       margin: 1rem;
       padding: 1rem;
+      grid-template-columns: auto auto;
+    }
+
+    p.title,
+    p.author,
+    p.pages{
+      grid-column: span 2;
     }
     p.read{
       display: inline-block;
+      margin-top: 0;
+    }
+
+    button.change{
+      height: fit-content;
     }
 
     button[btnID]{
       display: block;
+      grid-column: span 2;
     }
 
     fieldset{
