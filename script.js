@@ -2,6 +2,7 @@ const libraryContainer = document.querySelector('div.container');
 const addBtn = document.querySelector('button#add-book');
 const dialog = document.querySelector('dialog');
 const newBook = document.querySelector('form');
+const cancelBtn = document.querySelector('button[type=button]')
 
 const libraryArray = [];
 
@@ -47,13 +48,16 @@ function addBookToLibrary(book, array){
     const deleteBtn = document.createElement('button');
     let pos = array.length - 1;
     //link the card id to the delete button
-    deleteBtn.setAttribute('btnId', uniqueID);
+    deleteBtn.setAttribute('btnid', uniqueID);
     deleteBtn.innerHTML = 'Delete';
-    //add the event listener to the new button;
+    //add delete button, gests id from button and removes the card
     deleteBtn.addEventListener('click',() => {
       let id = deleteBtn.getAttribute('btnId');
       const card = document.querySelector('#' + CSS.escape(id));
       libraryContainer.removeChild(card);
+      //remove the book from the array
+      console.log(libraryArray.indexOf(book));
+      libraryArray.splice(libraryArray.indexOf(book), 1);
     })
 
     //add elements to the div
@@ -92,16 +96,16 @@ newBook.addEventListener('submit',() => {
   newBook.reset();
 })
 
+
+//cancel button == close the form ignoring the required fields and reset
+cancelBtn.addEventListener('click', () => {
+  newBook.reset();
+  dialog.close();
+})
+
+
 addBtn.addEventListener('click',() => {
   dialog.showModal();
 })
 
-//add delete button, gests id from button and removes the card
-const deleteBtn = document.querySelectorAll('p.read + button');
-deleteBtn.forEach((btn) => {
-  btn.addEventListener('click',() => {
-    let id = btn.getAttribute('btnId');
-    const card = document.querySelector('#' + CSS.escape(id));
-    libraryContainer.removeChild(card);
-  })
-})
+
