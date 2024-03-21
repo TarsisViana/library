@@ -7,16 +7,28 @@ const cancelBtn = document.querySelector('button[type=button]')
 const libraryArray = [];
 
 
-function Book(title, author, pages, read){
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+const Book = {
+  init: function(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    return this
+  },
+  
+  changeRead: () => {
+    if(this.read == 'read') this.read = 'not read';
+    else this.read = 'read'
+  }
 };
 
+
+
 // Add default books
-const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'read');
-const theTwoTowers = new Book('The Two Towers', 'J.R.R Tolkien', 352, 'read')
+const theHobbit = Object.create(Book);
+theHobbit.init('The Hobbit', 'J.R.R Tolkien', 295, 'read');
+const theTwoTowers = Object.create(Book);
+theTwoTowers.init('The Two Towers', 'J.R.R Tolkien', 352, 'read');
 libraryArray.push(theHobbit, theTwoTowers);
 libraryArray.forEach((book)=>{
   addBookToLibrary(book, libraryArray);
@@ -26,6 +38,7 @@ libraryArray.forEach((book)=>{
 
 
 function addBookToLibrary(book, array){
+
   
     //create all card elements and assign the atributes
     const divCard = document.createElement('div');
@@ -56,7 +69,6 @@ function addBookToLibrary(book, array){
       const card = document.querySelector('#' + CSS.escape(id));
       libraryContainer.removeChild(card);
       //remove the book from the array
-      console.log(libraryArray.indexOf(book));
       libraryArray.splice(libraryArray.indexOf(book), 1);
     })
 
@@ -69,12 +81,13 @@ function addBookToLibrary(book, array){
 
     //add content to the elements
     for(const property in book){
-      divCard.querySelector('.' + CSS.escape(property)).textContent = book[property];
+      if(Object.hasOwn(book, property)){
+        divCard.querySelector('.' + CSS.escape(property)).textContent = book[property];
+      }
     }
 
     //add the book card to the page
     libraryContainer.appendChild(divCard)
-
     
 }
 
@@ -89,11 +102,18 @@ newBook.addEventListener('submit',() => {
   const pages = elements[3].value;
   const read = elements[4].value;
   
-  const book = new Book(title, author, pages, read);
+  const book = Object.create(Book);
+  book.init(title, author, pages, read);
   libraryArray.push(book);
   addBookToLibrary(book, libraryArray);
 
   newBook.reset();
+})
+
+
+//open form
+addBtn.addEventListener('click',() => {
+  dialog.showModal();
 })
 
 
@@ -104,8 +124,6 @@ cancelBtn.addEventListener('click', () => {
 })
 
 
-addBtn.addEventListener('click',() => {
-  dialog.showModal();
-})
+
 
 
