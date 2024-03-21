@@ -13,12 +13,11 @@ const Book = {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    return this
   },
   
-  changeRead: () => {
+  changeRead: function () {
     if(this.read == 'read') this.read = 'not read';
-    else this.read = 'read'
+    else this.read = 'read';
   }
 };
 
@@ -58,8 +57,17 @@ function addBookToLibrary(book, array){
     const read = document.createElement('p');
     read.setAttribute('class', 'read');
 
+    //make change button
+    const changeBtn = document.createElement('button');
+    changeBtn.setAttribute('class', 'change');
+    changeBtn.innerHTML = 'change';
+    changeBtn.addEventListener('click', () =>{
+      book.changeRead();
+      read.innerHTML = book.read;
+    });
+
+
     const deleteBtn = document.createElement('button');
-    let pos = array.length - 1;
     //link the card id to the delete button
     deleteBtn.setAttribute('btnid', uniqueID);
     deleteBtn.innerHTML = 'Delete';
@@ -77,7 +85,9 @@ function addBookToLibrary(book, array){
     divCard.appendChild(author);
     divCard.appendChild(pages);
     divCard.appendChild(read);
+    divCard.appendChild(changeBtn);
     divCard.appendChild(deleteBtn);
+    
 
     //add content to the elements
     for(const property in book){
