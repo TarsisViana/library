@@ -14,8 +14,8 @@ function Book(title, author, pages, read){
 };
 
 // Add default books
-const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', '295', 'not read');
-const theTwoTowers = new Book('The Two Towers', 'J.R.R Tolkien', '295', 'not read')
+const theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'read');
+const theTwoTowers = new Book('The Two Towers', 'J.R.R Tolkien', 352, 'read')
 libraryArray.push(theHobbit, theTwoTowers);
 libraryArray.forEach((book)=>{
   addBookToLibrary(book, libraryArray);
@@ -49,6 +49,12 @@ function addBookToLibrary(book, array){
     //link the card id to the delete button
     deleteBtn.setAttribute('btnId', uniqueID);
     deleteBtn.innerHTML = 'Delete';
+    //add the event listener to the new button;
+    deleteBtn.addEventListener('click',() => {
+      let id = deleteBtn.getAttribute('btnId');
+      const card = document.querySelector('#' + CSS.escape(id));
+      libraryContainer.removeChild(card);
+    })
 
     //add elements to the div
     divCard.appendChild(title);
@@ -64,6 +70,8 @@ function addBookToLibrary(book, array){
 
     //add the book card to the page
     libraryContainer.appendChild(divCard)
+
+    
 }
 
 // when the submit button is pressed, adds the elements to a 
@@ -89,9 +97,11 @@ addBtn.addEventListener('click',() => {
 })
 
 //add delete button, gests id from button and removes the card
-const btn1 = document.querySelector('p.read + button');
-btn1.addEventListener('click',() => {
-  let id = btn1.getAttribute('btnId');
-  const card = document.querySelector('#' + CSS.escape(id));
-  libraryContainer.removeChild(card);
+const deleteBtn = document.querySelectorAll('p.read + button');
+deleteBtn.forEach((btn) => {
+  btn.addEventListener('click',() => {
+    let id = btn.getAttribute('btnId');
+    const card = document.querySelector('#' + CSS.escape(id));
+    libraryContainer.removeChild(card);
+  })
 })

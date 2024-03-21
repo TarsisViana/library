@@ -20,6 +20,24 @@
     button[value = 1]{
       background-color: aqua;
     }
+
+    fieldset{
+      width: 300px;
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 1rem;
+    }
+    legend + p{
+      grid-column: span 2;
+      margin: 0;
+    }
+    select + button{
+      grid-column: span 2;
+    }
+    fieldset button[type]{
+      grid-column: span 2;
+    }
+
   </style>
 </head>
 <body>
@@ -34,19 +52,19 @@
     </div>
   </div>
 
-  <dialog id="new-book">
+  <dialog id="new-book" open>
     <form method="dialog">
       <fieldset>
-        <legend>New Book:</legend>
-        <p>Fill out the information:</p>
+        <legend>New Book</legend>
+        <p>Fill out the information: (all fields required)</p>
         <label for="title">Title:</label>
-        <input id="title" type="text">
+        <input id="title" type="text" required>
         <label for="author">Author:</label>
-        <input type="text" id="author">
+        <input type="text" id="author" required>
         <label for="pages">Number of pages:</label>
-        <input type="number" id="pages">
+        <input type="number" id="pages" required>
         <label for="read">Have you read the book?</label>
-        <select name="read" id="read">
+        <select name="read" id="read" required>
           <option value="read">Yes</option>
           <option value="not read">No</option>
         </select>
